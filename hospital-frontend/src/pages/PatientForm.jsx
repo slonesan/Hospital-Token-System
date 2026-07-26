@@ -1,11 +1,11 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 import "../styles/PatientForm.css";
 
-function PatientForm() {
-    const { state } = useLocation();
-    const navigate = useNavigate();
+function PatientForm({ department, setPatientData }) {
+
+    const [loading, setLoading] = useState(false);
 
     const [form, setForm] = useState({
         name: "",
@@ -22,7 +22,8 @@ function PatientForm() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+
         e.preventDefault();
 
         if (form.phone.length !== 10) {
@@ -30,91 +31,126 @@ function PatientForm() {
             return;
         }
 
-        console.log({
-            department: state?.department,
-            ...form,
-        });
+        try {
 
-        navigate("/success");
+            setLoading(true);
+
+            const response = await axios.post(
+                "http://localhost:5000/api/patients",
+                {
+                    department,
+                    ...form,
+                }
+            );
+
+            setPatientData(response.data);
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                error.response?.data?.message ||
+                "Failed to generate token."
+            );
+
+        } finally {
+
+            setLoading(false);
+
+        }
+
     };
 
     return (
-        <div className="patient-page">
 
-            <form
-                className="patient-form"
-                onSubmit={handleSubmit}
+        <form
+            className="patient-form"
+            onSubmit={handleSubmit}
+        >
+
+            <h2>Patient Details</h2>
+
+            <label>Department</label>
+
+            <input
+                type="text"
+                value={department}
+                disabled
+            />
+
+            <label>Patient Name</label>
+
+            <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Enter patient name"
+                required
+            />
+
+            <label>Age</label>
+
+            <input
+                type="number"
+                name="age"
+                value={form.age}
+                onChange={handleChange}
+                placeholder="Enter age"
+                required
+            />
+
+            <label>Gender</label>
+
+            <select
+                name="gender"
+                value={form.gender}
+                onChange={handleChange}
+                required
             >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
 
-                <h1>Patient Details</h1>
+            <label>Phone Number</label>
 
-                <label>Department</label>
+            <input
+                type="tel"
+                name="phone"
+                value={form.phone}
+                maxLength={10}
+                onChange={handleChange}
+                placeholder="9876543210"
+                required
+            />
 
-                <input
-                    type="text"
-                    value={state?.department || ""}
-                    disabled
-                />
+            <label>Symptoms / Reason</label>
 
-                <label>Patient Name</label>
+            <textarea
+                rows="4"
+                name="symptoms"
+                value={form.symptoms}
+                onChange={handleChange}
+                placeholder="Describe the symptoms..."
+                required
+            />
 
-                <input
-                    type="text"
-                    name="name"
-                    onChange={handleChange}
-                    required
-                />
+            <button
+                type="submit"
+                disabled={loading}
+            >
+                {loading
+                    ? "Generating Token..."
+                    : "Generate Token"}
+            </button>
 
-                <label>Age</label>
+        </form>
 
-                <input
-                    type="number"
-                    name="age"
-                    onChange={handleChange}
-                    required
-                />
-
-                <label>Gender</label>
-
-                <select
-                    name="gender"
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="">Select</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Other</option>
-                </select>
-
-                <label>Phone Number</label>
-
-                <input
-                    type="tel"
-                    name="phone"
-                    maxLength={10}
-                    pattern="[0-9]{10}"
-                    onChange={handleChange}
-                    required
-                />
-
-                <label>Symptoms / Reason</label>
-
-                <textarea
-                    rows="4"
-                    name="symptoms"
-                    onChange={handleChange}
-                    required
-                />
-
-                <button type="submit">
-                    Generate Token
-                </button>
-
-            </form>
-
-        </div>
     );
+
 }
 
 export default PatientForm;

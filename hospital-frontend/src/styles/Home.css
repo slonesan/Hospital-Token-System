@@ -1,91 +1,388 @@
-body {
+@import "./variables.css";
+
+* {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #ececec;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    background: #0b0b0b;
+
+    color: white;
+
+    font-family: "Segoe UI", sans-serif;
+
+    overflow-x: hidden;
+
 }
 
 .home {
+
+    position: relative;
+
+    width: 100%;
+
     min-height: 100vh;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding: 40px 0 80px;
 
-    padding: 40px;
+    overflow: hidden;
+
 }
 
-.home h1 {
-    margin-bottom: 35px;
+/* ===========================================
+   Animated Background
+=========================================== */
 
-    color: #222;
+.background-blobs {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+}
+
+.blob {
+
+    position: absolute;
+
+    border-radius: 52% 48% 61% 39% / 42% 57% 43% 58%;
+
+    filter: blur(140px);
+
+    will-change: transform;
+
+}
+
+/* Large top blob */
+
+.blob1 {
+
+    width: 700px;
+
+    height: 700px;
+
+    background: #16a34a;
+
+    opacity: .18;
+
+    left: -250px;
+
+    top: 0;
+
+    animation: floatOne 42s linear infinite;
+
+}
+
+/* Right blob */
+
+.blob2 {
+
+    width: 600px;
+
+    height: 600px;
+
+    background: #22c55e;
+
+    opacity: .12;
+
+    left: 75%;
+
+    top: 30%;
+
+    animation: floatTwo 48s linear infinite;
+
+}
+
+/* Bottom blob */
+
+.blob3 {
+
+    width: 520px;
+
+    height: 520px;
+
+    background: #15803d;
+
+    opacity: .16;
+
+    left: 10%;
+
+    top: 1200px;
+
+    animation: floatThree 38s linear infinite;
+
+}
+
+/* ===========================================
+   Content
+=========================================== */
+
+.hero,
+.section {
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+/* ===========================================
+   Hero
+=========================================== */
+
+.hero {
 
     text-align: center;
-    font-size: 38px;
+
+    margin-bottom: 60px;
+
 }
+
+.hero h1 {
+
+    font-size: 3.4rem;
+
+    font-weight: 800;
+
+    color: white;
+
+}
+
+/* ===========================================
+   Sections
+=========================================== */
+
+.section {
+
+    width: 1280px;
+
+    max-width: 92%;
+
+    margin: 0 auto 70px;
+
+}
+
+.section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 25px;
+
+}
+
+.step {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: #16a34a;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: white;
+
+}
+
+.section-title h2 {
+
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    color: white;
+
+}
+
+/* ===========================================
+   Panels
+=========================================== */
+
+.department-container,
+.form-section,
+.success-card {
+
+    background: rgba(24,24,24,.80);
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(255,255,255,.05);
+
+    border-radius: 18px;
+
+    padding: 40px;
+
+    box-shadow: 0 15px 45px rgba(0,0,0,.45);
+
+}
+
+/* ===========================================
+   Department Grid
+=========================================== */
 
 .department-container {
 
-    width: 900px;
-    max-width: 95%;
-
-    background: #232323;
-
-    border-radius: 20px;
-
-    padding: 35px;
-
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3,1fr);
 
-    gap: 25px;
-}
-
-.department-card {
-
-    background: white;
-
-    border-radius: 14px;
-
-    padding: 30px;
-
-    text-align: center;
-
-    cursor: pointer;
-
-    transition: .25s;
-}
-
-.department-card:hover {
-
-    transform: translateY(-6px);
-
-    box-shadow: 0 10px 20px rgba(0,0,0,.2);
-}
-
-.department-icon {
-
-    font-size: 52px;
-
-    margin-bottom: 15px;
-}
-
-.department-card h3 {
-
-    margin: 0;
-
-    color: #333;
-
-    font-size: 22px;
-}
-
-@media (max-width:800px){
-
-.department-container{
-
-grid-template-columns:1fr;
+    gap: 20px;
 
 }
+
+/* ===========================================
+   Mobile
+=========================================== */
+
+@media (max-width:900px){
+
+    .hero h1{
+
+        font-size:2.3rem;
+
+    }
+
+    .department-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+/* ===========================================
+   Animations
+=========================================== */
+
+@keyframes floatOne {
+
+    0% {
+
+        transform: translate(-100px,0px) scale(1);
+
+    }
+
+    20% {
+
+        transform: translate(400px,120px) scale(1.15);
+
+    }
+
+    40% {
+
+        transform: translate(900px,320px) scale(.95);
+
+    }
+
+    60% {
+
+        transform: translate(500px,700px) scale(1.2);
+
+    }
+
+    80% {
+
+        transform: translate(-150px,900px) scale(.9);
+
+    }
+
+    100% {
+
+        transform: translate(-100px,0px) scale(1);
+
+    }
+
+}
+
+@keyframes floatTwo {
+
+    0% {
+
+        transform: translate(0,0) scale(1);
+
+    }
+
+    25% {
+
+        transform: translate(-700px,-120px) scale(1.12);
+
+    }
+
+    50% {
+
+        transform: translate(-1000px,250px) scale(.9);
+
+    }
+
+    75% {
+
+        transform: translate(-300px,650px) scale(1.15);
+
+    }
+
+    100% {
+
+        transform: translate(0,0) scale(1);
+
+    }
+
+}
+
+@keyframes floatThree {
+
+    0% {
+
+        transform: translate(0,0) scale(1);
+
+    }
+
+    25% {
+
+        transform: translate(600px,-300px) scale(1.1);
+
+    }
+
+    50% {
+
+        transform: translate(1000px,-700px) scale(.9);
+
+    }
+
+    75% {
+
+        transform: translate(300px,-1000px) scale(1.18);
+
+    }
+
+    100% {
+
+        transform: translate(0,0) scale(1);
+
+    }
 
 }

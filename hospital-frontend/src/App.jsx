@@ -1,15 +1,25 @@
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import PatientForm from "./pages/PatientForm";
-import Success from "./pages/Success";
+import TrackPatient from "./pages/TrackPatient";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminGate from "./components/admin/AdminGate";
 
 function App() {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/patient" element={<PatientForm />} />
-            <Route path="/success" element={<Success />} />
+
+            <Route path="/track/:token" element={<TrackPatient />} />
+
+            <Route
+                path="/admin"
+                element={
+                    <AdminGate>
+                        <AdminDashboard />
+                    </AdminGate>
+                }
+            />
         </Routes>
     );
 }
