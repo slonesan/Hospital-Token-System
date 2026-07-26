@@ -13,7 +13,7 @@ function App() {
             <Route path="/track/:token" element={<TrackPatient />} />
 
             <Route
-                path="/admin"
+                path="/dashboard"
                 element={
                     <AdminGate>
                         <AdminDashboard />
