@@ -13,7 +13,7 @@ export default function AdminDashboard() {
 
     const fetchPatients = async () => {
         try {
-            const res = await axios.get(API_URL);
+            const res = await axios.get(`${API_URL}/api/patients`);
             setPatients(res.data.patients);
         } catch (err) {
             console.error("Failed to fetch patients:", err);
@@ -24,9 +24,12 @@ export default function AdminDashboard() {
 
     const updateStatus = async (token, status) => {
         try {
-            await axios.patch(`${API_URL}/${token}/status`, {
-                status,
-            });
+            await axios.patch(
+                `${API_URL}/api/patients/${token}/status`,
+                {
+                    status,
+                }
+            );
 
             fetchPatients();
         } catch (err) {
