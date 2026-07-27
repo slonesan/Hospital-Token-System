@@ -5,7 +5,7 @@ import Header from "../components/admin/Header";
 import DashboardCard from "../components/admin/DashboardCard";
 import PatientTable from "../components/admin/PatientTable";
 
-const API_URL = "http://localhost:5000/api/patients";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function AdminDashboard() {
     const [patients, setPatients] = useState([]);
