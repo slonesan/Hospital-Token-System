@@ -13,7 +13,7 @@ function TrackPatient() {
 
     const fetchPatient = async () => {
         try {
-            const res = await fetch(`${API_URL}/${token}`);
+            const res = await fetch(`${API_URL}/api/patients/${token}`);
             const data = await res.json();
 
             if (!res.ok) {
